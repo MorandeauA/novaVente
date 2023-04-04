@@ -28,11 +28,13 @@ exports.getFilmById = async (req, res) => {
 // Ajouter un nouveau film
 exports.addFilm = async (req, res) => {
   try {
-    const { nom, date_sortie, description, photo } = req.body;
+    const { nom, date_sortie, description, realisateur, duree, photo } = req.body;
     const newFilm = await Film.create({
       nom,
       date_sortie,
       description,
+      realisateur,
+      duree,
       photo
     });
     res.json(newFilm);
@@ -45,7 +47,7 @@ exports.addFilm = async (req, res) => {
 // Mettre à jour un film existant
 exports.updateFilm = async (req, res) => {
   try {
-    const { nom, date_sortie, description, photo } = req.body;
+    const { nom, date_sortie, description, realisateur, duree, photo } = req.body;
     const film = await Film.findByPk(req.params.id);
     if (!film) {
       return res.status(404).send('Film not found');
@@ -53,6 +55,8 @@ exports.updateFilm = async (req, res) => {
     film.nom = nom;
     film.date_sortie = date_sortie;
     film.description = description;
+    film.realisateur = realisateur;
+    film.duree = duree;
     film.photo = photo;
     await film.save();
     res.json(film);

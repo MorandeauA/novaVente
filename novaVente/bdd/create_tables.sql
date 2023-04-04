@@ -14,6 +14,8 @@ CREATE TABLE films (
   nom VARCHAR(255) NOT NULL,
   date_sortie DATE NOT NULL,
   description TEXT NOT NULL,
+  realisateur VARCHAR(255) NOT NULL,
+  duree INT(11) NOT NULL,
   photo VARCHAR(1024) DEFAULT NULL,
   PRIMARY KEY (id)
 );

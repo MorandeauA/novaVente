@@ -19,6 +19,14 @@ const Film = sequelize.define('Film', {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  realisateur: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  duree: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   photo: {
     type: DataTypes.STRING(1024),
     allowNull: true
