@@ -1,5 +1,5 @@
 -- Création de la base de données
-CREATE DATABASE novaventeDB;
+CREATE DATABASE critiksDB;
 
 -- Utilisation de la base de données
-USE novaventeDB;
+USE critiksDB;
