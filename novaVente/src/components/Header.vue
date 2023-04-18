@@ -3,6 +3,7 @@
     <router-link to="/">
       <div class="logo">CRITIKS</div>
     </router-link>
+    <img class="img" src="../assets/logoNova.png" alt="Logo" />
     <nav>
       <ul>
         <li><router-link to="/">Accueil</router-link></li>
@@ -28,7 +29,11 @@ export default {
   color: white;
   font-size: 24px;
 }
-
+.img{
+  width: 80px;
+  height: 80px;
+  margin-left: 5%;
+}
 .logo {
   font-size: 36px;
   font-weight: bold;

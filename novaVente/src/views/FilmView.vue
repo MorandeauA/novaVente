@@ -1,6 +1,6 @@
 <template>
+  <h1 class="titre">Film</h1>
   <div class="film-list">
-    <h1>Film</h1>
     <div class="film-container">
       <div class="film" v-for="film in films" :key="film.id">
         <img :src="film.photo" alt="Photo du film">
@@ -49,6 +49,36 @@ export default {
           duree : '2h02',
           photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
           rating: 7
+        },
+        {
+          id: 4,
+          nom: 'Joker',
+          date_sortie: '2019-10-04',
+          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
+          realisteur: 'Todd Phillips',
+          duree : '2h02',
+          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
+          rating: 7
+        },
+        {
+          id: 4,
+          nom: 'Joker',
+          date_sortie: '2019-10-04',
+          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
+          realisteur: 'Todd Phillips',
+          duree : '2h02',
+          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
+          rating: 7
+        },
+        {
+          id: 4,
+          nom: 'Joker',
+          date_sortie: '2019-10-04',
+          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
+          realisteur: 'Todd Phillips',
+          duree : '2h02',
+          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
+          rating: 7
         }
       ]
     }
@@ -60,4 +90,22 @@ img {
   width: 69px;
   height: 40px;
 }
+.film-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(150px, auto);
+  grid-gap: 20px;
+}
+
+.film-list{
+
+  margin-left: 14%;
+
+  margin-top: 2%;
+}
+
+.titre{
+text-align: center;
+}
+
 </style>
