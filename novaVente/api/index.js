@@ -1,35 +1,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { Sequelize } = require('sequelize');
-const config = require('./config');
+const sequelize = require('./sequelize');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-const sequelize = new Sequelize(config.development.database, config.development.username, config.development.password, {
-  host: config.development.host,
-  dialect: config.development.dialect
-});
-
-const Client = sequelize.import('./models/clients.js');
-const Film = sequelize.import('./models/films.js');
-const Avis = sequelize.import('./models/avis.js');
+const Avis = require('../api/models/avis');
+const Client = require('../api/models/clients');
+const Film = require('../api/models/films');
 
 sequelize.sync();
 
 // Routes pour les clients
-const clientRoutes = require('./routes/clientsRoutes');
+const clientRoutes = require('../api/routes/clientsRoutes');
 app.use('/api/clients', clientRoutes);
 
 // Routes pour les films
-const filmRoutes = require('./routes/filmsRoutes');
+const filmRoutes = require('../api/routes/filmsRoutes');
 app.use('/api/films', filmRoutes);
 
 // Routes pour les avis
-const avisRoutes = require('./routes/avisRoutes');
+const avisRoutes = require('../api/routes/avisRoutes');
 app.use('/api/avis', avisRoutes);
 
 // Lancement de l'application

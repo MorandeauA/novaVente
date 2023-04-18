@@ -3,18 +3,18 @@ const router = express.Router();
 const clientsController = require('../controllers/clients');
 
 // GET all clients
-router.get('/', clientsController.getAllClients);
+router.get('/', clientsController.findAll);
 
 // GET a specific client by id
-router.get('/:id', clientsController.getClientById);
+router.get('/:id', clientsController.findOne);
 
 // CREATE a new client
-router.post('/', clientsController.createNewClient);
+router.post('/', clientsController.create);
 
 // UPDATE a client by id
-router.put('/:id', clientsController.updateClientById);
+router.put('/:id', clientsController.update);
 
 // DELETE a client by id
-router.delete('/:id', clientsController.deleteClientById);
+router.delete('/:id', clientsController.delete);
 
 module.exports = router;

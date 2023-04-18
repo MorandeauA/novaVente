@@ -9,7 +9,7 @@ router.get('/', avisController.getAllAvis);
 router.get('/:id', avisController.getAvisById);
 
 // Route pour créer un nouvel avis
-router.post('/', avisController.createAvis);
+router.post('/', avisController.addAvis);
 
 // Route pour mettre à jour un avis existant
 router.put('/:id', avisController.updateAvis);
