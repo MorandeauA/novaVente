@@ -1,5 +1,4 @@
-const db = require('../models');
-const Clients = db.clients;
+const Clients = require('../models/clients');
 
 // Create and save a new client
 exports.create = (req, res) => {
@@ -31,19 +30,18 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all clients from the database
-exports.findAll = (req, res) => {
-  Clients.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Une erreur s'est produite lors de la récupération des clients."
-      });
+// Retrieve all clients from the database and export the function findAll
+exports.findAll = async (req, res) => {
+  try {
+    const clients = await Clients.findAll();
+    res.send(clients);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Une erreur s'est produite lors de la récupération des clients."
     });
+  }
 };
+
 
 // Find a single client with an id
 exports.findOne = (req, res) => {

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const filmsController = require('../controllers/films');
 
 // GET - Récupérer tous les films
