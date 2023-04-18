@@ -25,7 +25,7 @@ CREATE TABLE avis (
   id INT(11) NOT NULL AUTO_INCREMENT,
   id_client INT(11) NOT NULL,
   id_film INT(11) NOT NULL,
-  note INT(2) NOT NULL,
+  note INT(1) NOT NULL,
   commentaire TEXT NOT NULL,
   date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

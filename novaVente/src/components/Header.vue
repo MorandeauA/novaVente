@@ -26,7 +26,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: #16161a;
-  padding: 20px 50px;
+  padding: 20px 20px;
   color: white;
   font-size: 24px;
 }

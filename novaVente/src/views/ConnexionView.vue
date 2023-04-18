@@ -1,6 +1,7 @@
 <template>
+    <h1 class="titre">Connexion</h1>
+  <hr>
   <div class="login-form">
-    <h2>Connexion</h2>
     <form @submit.prevent="submitForm">
       <div>
         <label for="email">Email:</label>
@@ -67,6 +68,17 @@ input[type=submit] {
 
 .error-message {
   color: red;
+}
+.titre{
+  margin-top: 2%;
+text-align: center;
+}
+
+hr{
+  border: none; 
+  border-top: 2px solid #333;
+   margin-left: 45%;
+    margin-right: 45%;
 }
 </style>
 

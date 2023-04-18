@@ -5,6 +5,9 @@
     <div class="cta-container">
       <router-link to="/film" class="cta-btn">Voir toutes les critiques</router-link>
     </div>
+    
+    <router-link to="/film" class="cta-btn"><img  style="width: 60px; height: 60px;" src="../assets/fl.png" alt="logo"></router-link>
+
   </div>
 </template>
 

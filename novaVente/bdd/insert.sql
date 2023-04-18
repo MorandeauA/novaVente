@@ -23,4 +23,4 @@ INSERT INTO films (nom, date_sortie, description, realisateur, duree, photo) VAL
   ('Le Voyage de Chihiro', '2001-07-20', 'Film d\'animation', 'Hayao Miyazaki', 125, 'levoyagedechihiro.jpg');
 
 
-INSERT INTO `avis` (`id`, `id_client`, `id_film`, `note`, `commentaire`, `date_creation`) VALUES ('1', '6', '5', '12', 'Excellent film !', current_timestamp());
+INSERT INTO `avis` (`id`, `id_client`, `id_film`, `note`, `commentaire`, `date_creation`) VALUES ('1', '6', '5', '4', 'Excellent film !', current_timestamp());
