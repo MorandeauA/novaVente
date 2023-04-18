@@ -8,6 +8,7 @@
       <ul>
         <li><router-link to="/">Accueil</router-link></li>
         <li><router-link to="/film">Films</router-link></li>
+        <li><router-link to="/connexion">Connexion</router-link></li>
       </ul>
     </nav>
   </div>
@@ -32,7 +33,7 @@ export default {
 .img{
   width: 80px;
   height: 80px;
-  margin-left: 5%;
+  margin-left: 14%;
 }
 .logo {
   font-size: 36px;
