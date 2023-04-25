@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const sequelize = require('./sequelize');
+const path = require('path');
 
 const app = express();
 
@@ -13,6 +14,13 @@ const Client = require('../api/models/clients');
 const Film = require('../api/models/films');
 
 sequelize.sync();
+
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
+
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
 
 // Routes pour les clients
 const clientRoutes = require('../api/routes/clientsRoutes');
