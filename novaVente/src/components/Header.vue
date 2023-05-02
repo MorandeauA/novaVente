@@ -8,6 +8,7 @@
       <ul>
         <li><router-link to="/">Accueil</router-link></li>
         <li><router-link to="/film">Films</router-link></li>
+        <li v-if="isConnected"><router-link to="/stats">Profil</router-link></li>
         <li><router-link to="/connexion">Connexion</router-link></li>
       </ul>
     </nav>
@@ -16,7 +17,12 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data() {
+    return {
+      isConnected: true // Remplacez par votre condition de connexion
+    }
+  }
 }
 </script>
 
