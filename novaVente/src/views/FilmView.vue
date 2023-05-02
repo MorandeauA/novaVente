@@ -1,5 +1,6 @@
 <template>
   <h1 class="titre">Film</h1>
+  <button class="cta-btn" @click="getFilms">voir tous les films</button>
   <hr>
   <div class="film-list">
     <div class="film-container">
@@ -7,7 +8,7 @@
         <img :src="film.photo" alt="Photo du film">
         <div class="film-info">
           <h2>{{ film.nom }}</h2>
-          <p>{{ film.realisteur }}</p>
+          <p>{{ film.realisateur }}</p>
           <p>Note : {{ film.rating }}/5 </p>
           <div class="etoiles">
             <span v-if="film.rating >= 1" class="etoile-jaune">★</span>
@@ -45,74 +46,15 @@
 
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Film',
   data() {
     return {
       films: [
-        {
-          id: 1,
-          nom: 'Le Parrain',
-          date_sortie: '1972-03-24',
-          description: 'Un classique du cinéma, mettant en vedette Marlon Brando et Al Pacino.',
-          realisteur: 'Francis Ford Coppola',
-          duree : '2h55',
-          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
-          rating: 2
-        },
-        {
-          id: 2,
-          nom: 'La La Land',
-          date_sortie: '2016-12-09',
-          description: 'Une comédie musicale romantique mettant en vedette Emma Stone et Ryan Gosling.',
-          realisteur: 'Damien Chazelle',
-          duree : '2h08',
-          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
-          rating: 1
-        },
-        {
-          id: 3,
-          nom: 'Joker',
-          date_sortie: '2019-10-04',
-          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
-          realisteur: 'Todd Phillips',
-          duree : '2h02',
-          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
-          rating: 5
-        },
-        {
-          id: 4,
-          nom: 'Joker',
-          date_sortie: '2019-10-04',
-          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
-          realisteur: 'Todd Phillips',
-          duree : '2h02',
-          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
-          rating: 2
-        },
-        {
-          id: 4,
-          nom: 'Joker',
-          date_sortie: '2019-10-04',
-          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
-          realisteur: 'Todd Phillips',
-          duree : '2h02',
-          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
-          rating: 4
-        },
-        {
-          id: 4,
-          nom: 'Joker',
-          date_sortie: '2019-10-04',
-          description: 'Un film de super-héros sombre mettant en vedette Joaquin Phoenix dans le rôle du Joker.',
-          realisteur: 'Todd Phillips',
-          duree : '2h02',
-          photo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Lotus_flower_%28978659%29.jpg',
-          rating: 3
-        }
       ],
       selectedFilm: null
-
     }
   },
   methods: {
@@ -121,11 +63,22 @@ export default {
   },
   closeDialog() {
     this.selectedFilm = null;
+  },
+    showDetails(film) {
+      this.selectedFilm = film;
+    },
+    async getFilms() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/films');
+        this.films = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   }
 }
-
-}
 </script>
+
 <style scoped>
 .modal {
   position: fixed;

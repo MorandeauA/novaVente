@@ -6,6 +6,13 @@ const path = require('path');
 
 const app = express();
 
+const axios = require('axios');
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000/api',
+  timeout: 1000, // nombre maximum de millisecondes pour attendre une réponse
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -14,13 +21,6 @@ const Client = require('../api/models/clients');
 const Film = require('../api/models/films');
 
 sequelize.sync();
-
-app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'ejs');
-
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard');
-});
 
 // Routes pour les clients
 const clientRoutes = require('../api/routes/clientsRoutes');
