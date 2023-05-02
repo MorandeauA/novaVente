@@ -1,6 +1,5 @@
 <template>
   <h1 class="titre">Film</h1>
-  <button class="cta-btn" @click="getFilms">voir tous les films</button>
   <hr>
   <div class="film-list">
     <div class="film-container">
@@ -57,6 +56,9 @@ export default {
       selectedFilm: null
     }
   },
+  mounted() {
+    this.getFilms();
+  },
   methods: {
   showDetails(film) {
     this.selectedFilm = film;
@@ -64,17 +66,17 @@ export default {
   closeDialog() {
     this.selectedFilm = null;
   },
-    showDetails(film) {
-      this.selectedFilm = film;
-    },
-    async getFilms() {
-      try {
-        const response = await axios.get('http://localhost:3000/api/films');
-        this.films = response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+  showDetails(film) {
+    this.selectedFilm = film;
+  },
+  async getFilms() {
+    try {
+      const response = await axios.get('http://localhost:3000/api/films');
+      this.films = response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   }
 }
 </script>
