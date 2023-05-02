@@ -103,6 +103,10 @@ export default {
       }
       // Envoyer les données du formulaire au backend pour la validation et l'authentification
       // Si l'authentification réussit, rediriger l'utilisateur vers la page d'accueil
+      // Sinon, afficher un message d'erreur
+
+      // Exemple de redirection vers la page d'accueil
+      this.$router.push('/')
     }
   }
 }

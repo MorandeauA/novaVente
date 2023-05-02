@@ -7,7 +7,7 @@
         <img :src="film.photo" alt="Photo du film">
         <div class="film-info">
           <h2>{{ film.nom }}</h2>
-          <p>{{ film.content }}</p>
+          <p>{{ film.realisteur }}</p>
           <p>Note : {{ film.rating }}/5 </p>
           <div class="etoiles">
             <span v-if="film.rating >= 1" class="etoile-jaune">★</span>
@@ -22,7 +22,8 @@
             <span v-else class="etoile-grise">★</span>
           </div>
           <div>
-          <button @click="showDetails(film)">Voir détails</button>
+          <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
+          <button @click="showDetails(film)" style="cursor: pointer;">Ajouter commentaire</button>
           </div>
         </div>
       </div>
@@ -30,11 +31,12 @@
   </div>
   <div v-if="selectedFilm" class="modal">
     <div class="modal-content">
-      <h2>{{ selectedFilm.nom }}</h2>
+      <u><h2 class="dialog-titre">{{ selectedFilm.nom }}</h2></u>
       <img  class="dialog-image" :src="selectedFilm.photo" alt="Photo du film">
       <p>{{ selectedFilm.content }}</p>
       <p>Note : {{ selectedFilm.rating }}/5 </p>
       <!-- ajouter d'autres informations sur le film ici -->
+      <span @click="selectedFilm = null" style="cursor: pointer;">❌</span>
       <button @click="selectedFilm = null">Fermer</button>
     </div>
   </div>
@@ -114,10 +116,14 @@ export default {
     }
   },
   methods: {
-    showDetails(film) {
-      this.selectedFilm = film;
-    }
+  showDetails(film) {
+    this.selectedFilm = film;
+  },
+  closeDialog() {
+    this.selectedFilm = null;
   }
+}
+
 }
 </script>
 <style scoped>
@@ -134,7 +140,7 @@ export default {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: antiquewhite;
   padding: 20px;
   max-width: 80%;
   max-height: 80%;
@@ -147,6 +153,9 @@ export default {
 
 .dialog-image{
   width: 40%;
+}
+.dialog-titre{
+  text-align: center;
 }
 .etoiles {
   font-size: 24px;
@@ -169,6 +178,7 @@ export default {
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(250px, auto);
   grid-gap: 20px;
+
 }
 
 .film-list{
