@@ -1,26 +1,27 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const Clients = require('../models/clients');
 
-// Create and save a new client
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.nom || !req.body.prenom || !req.body.email) {
+  if (!req.body.prenom || !req.body.email || !req.body.password) {
     res.status(400).send({
-      message: "Nom, prénom et email sont obligatoires !"
+      message: "Email et mot de passe sont obligatoires !"
     });
     return;
   }
 
   // Create a client
   const client = {
-    nom: req.body.nom,
     prenom: req.body.prenom,
-    email: req.body.email
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 10),
   };
 
   // Save client in the database
   Clients.create(client)
     .then(data => {
-      res.send(data);
+      res.send({ auth: true});
     })
     .catch(err => {
       res.status(500).send({
@@ -39,6 +40,30 @@ exports.findAll = async (req, res) => {
     res.status(500).send({
       message: err.message || "Une erreur s'est produite lors de la récupération des clients."
     });
+  }
+};
+
+//get client by email (login)
+exports.findByEmail = async (req, res) => {
+  try {
+    const client = await Clients.findAll();
+    console.log(req.query.params)
+    //boucler sur le tableau pour trouver le client avec le bon email
+    for (let i = 0; i < client.length; i++) {
+      if (client[i].email === req.body.email) {
+        console.log(client[i].email)
+        const ismatch = await bcrypt.compare(req.body.password, client[i].password);
+        if (ismatch) {
+          const token = jwt.sign({ id: client[i].id }, "mysecretkey");
+          console.log(token)
+        res.json({token});
+        } else {
+          res.status(401).send({ message: "Mot de passe incorrect" });
+        }
+      }      
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -78,7 +103,7 @@ exports.update = (req, res) => {
         });
       } else {
         res.status(404).send({
-          message: "Impossible de mettre à jour le client avec l'ID " + id + "."
+          message: "Impossible de mettre à jour le client avec l'ID " + id
         });
       }
     })

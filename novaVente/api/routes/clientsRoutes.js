@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const clientsController = require('../controllers/clients');
 
+// GET a specific client by email
+router.post('/connexion', clientsController.findByEmail);
+
 // GET all clients
 router.get('/', clientsController.findAll);
 
