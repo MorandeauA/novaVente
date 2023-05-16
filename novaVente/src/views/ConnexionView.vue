@@ -101,7 +101,7 @@ export default {
         }
       }
       console.log(credential)
-      axios.get('http://localhost:3000/api/clients/connexion', credential)
+      axios.post('http://localhost:3000/api/clients/connexion', credential)
       .then(response => {
         console.log(response.data)
         localStorage.setItem('token', response.data.token);

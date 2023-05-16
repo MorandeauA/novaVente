@@ -43,7 +43,7 @@ exports.findAll = async (req, res) => {
   }
 };
 
-//get client by email
+//get client by email (login)
 exports.findByEmail = async (req, res) => {
   try {
     const client = await Clients.findAll();
@@ -56,13 +56,11 @@ exports.findByEmail = async (req, res) => {
         if (ismatch) {
           const token = jwt.sign({ id: client[i].id }, "mysecretkey");
           console.log(token)
-        res.send(token);
+        res.json({token});
         } else {
           res.status(401).send({ message: "Mot de passe incorrect" });
         }
-      }// else {
-        //res.status(401).send({ message: "Email incorrect" });
-      
+      }      
     }
   } catch (err) {
     res.status(500).send({ message: err.message });
