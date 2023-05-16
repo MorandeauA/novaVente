@@ -27,11 +27,11 @@
       
       <label for="photo">Photo:</label>
       <input type="text" id="photo" v-model="newFilm.photo">
-      
+            
       <button type="submit">Ajouter le film</button>
     </form>
     <br>
-    <button @click="closeDialog">❌ Fermer</button>
+    <button class="btnajout" @click="closeDialog">❌ Fermer</button>
     </div>
   </div>
 
@@ -49,6 +49,7 @@
           <div>
           <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
           <button @click="showDetails(film)" style="cursor: pointer;">Ajouter commentaire</button>
+          <button @click="deleteFilm(film.id)">❌ Supprimer film</button> <!-- Bouton de suppression -->
           </div>
         </div>
       </div>
@@ -77,27 +78,10 @@
         </div>
       </div>
     </div>
-    <button @click="selectedFilm = null">❌ Fermer</button>
+    <button  @click="selectedFilm = null">❌ Fermer</button>
   </div>
 </div>
 
-  <!-- <div v-if="showDialog" class="dialog">
-    <div class="dialog-content">
-      <h2>Ajouter un film</h2>
-      <form>
-        <label>Nom du film</label>
-        <input type="text" v-model="newFilm.nom">
-        <label>Photo du film</label>
-        <input type="text" v-model="newFilm.photo">
-        <label>Realisateur</label>
-        <input type="text" v-model="newFilm.realisateur">
-        <label>Note</label>
-        <input type="number" v-model="newFilm.rating" min="0" max="5" step="0.1">
-        <button type="submit" @click.prevent="addFilm">Ajouter</button>
-      </form>
-      <button @click="closeDialog">❌ Fermer</button>
-    </div>
-  </div>  -->
 
 </template>
 
@@ -167,6 +151,9 @@ export default {
       this.showFullNom[index] = !this.showFullNom[index];
     },
     async addFilm() {
+      if (this.newFilm.photo && !isValidURL(this.newFilm.photo)) {
+        this.newFilm.photo = '';
+      }
       try {
         const response = await axios.post('http://localhost:3000/api/films', this.newFilm);
         console.log(this.newFilm);
@@ -177,14 +164,37 @@ export default {
         console.log(error);
       }
     },
+    async deleteFilm(filmId) {
+      try {
+        await axios.delete(`http://localhost:3000/api/films/${filmId}`);
+        
+        // Filtrer le film supprimé de la liste des films
+        this.films = this.films.filter(film => film.id !== filmId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     openDialog() {
       this.showDialog = true;
     },
   }
 }
+function isValidURL(str) {
+  const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // IP address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return !!pattern.test(str);
+}
 </script>
 
 <style scoped>
+.btnajout{
+  margin-left: 47%;
+  cursor: pointer;
+}
 .dialog-flex-container {
   display: flex;
 }
