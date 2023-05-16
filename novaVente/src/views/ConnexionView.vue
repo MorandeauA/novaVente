@@ -92,18 +92,16 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log(this.email)
-      console.log(this.password)
+      console.log("this.email = ", (this.email))
+      console.log("this.password = ", (this.password))
       const credential = {
-        params: {
           email: this.email,
           password: this.password
-        }
       }
-      console.log(credential)
+      console.log("credential = ", (credential))
       axios.post('http://localhost:3000/api/clients/connexion', credential)
       .then(response => {
-        console.log(response.data)
+        console.log("response data = ", (response.data))
         localStorage.setItem('token', response.data.token);
         this.$router.push('/');
       })

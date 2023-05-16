@@ -47,16 +47,16 @@ exports.findAll = async (req, res) => {
 exports.findByEmail = async (req, res) => {
   try {
     const client = await Clients.findAll();
-    console.log(req.query.params)
+    console.log("req.body.email = ", (req.body.email))
     //boucler sur le tableau pour trouver le client avec le bon email
     for (let i = 0; i < client.length; i++) {
       if (client[i].email === req.body.email) {
-        console.log(client[i].email)
+        console.log("client[i].email = ", (client[i].email))
         const ismatch = await bcrypt.compare(req.body.password, client[i].password);
         if (ismatch) {
           const token = jwt.sign({ id: client[i].id }, "mysecretkey");
           console.log(token)
-        res.json({token});
+          res.json({token});
         } else {
           res.status(401).send({ message: "Mot de passe incorrect" });
         }
