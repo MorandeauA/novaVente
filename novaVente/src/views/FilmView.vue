@@ -151,8 +151,8 @@ export default {
       this.showFullNom[index] = !this.showFullNom[index];
     },
     async addFilm() {
-      if (this.newFilm.photo && !isValidURL(this.newFilm.photo)) {
-        this.newFilm.photo = '';
+      if (this.newFilm.photo && !isValidURL(this.newFilm.photo) || this.newFilm.photo === '') {
+        this.newFilm.photo = 'https://cdn.discordapp.com/attachments/1059803143547928586/1089236167813234840/Willem_morras_An_antique_Greek_illustration_depicting_the_trium_dd8e23ec-d61b-478e-a29c-6a407f9b29ed.png';
       }
       try {
         const response = await axios.post('http://localhost:3000/api/films', this.newFilm);
