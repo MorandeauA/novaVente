@@ -7,6 +7,7 @@ const path = require('path');
 const app = express();
 
 const axios = require('axios');
+require('dotenv').config();
 
 const api = axios.create({
   baseURL: 'http://localhost:3000/api',

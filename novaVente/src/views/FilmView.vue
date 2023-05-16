@@ -51,8 +51,7 @@ export default {
   name: 'Film',
   data() {
     return {
-      films: [
-      ],
+      films: [],
       selectedFilm: null
     }
   },
@@ -65,9 +64,6 @@ export default {
   },
   closeDialog() {
     this.selectedFilm = null;
-  },
-  showDetails(film) {
-    this.selectedFilm = film;
   },
   async getFilms() {
     try {

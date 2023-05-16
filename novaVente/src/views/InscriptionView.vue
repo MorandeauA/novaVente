@@ -3,21 +3,21 @@
   <hr>
   <div class="signup-form">
     <form @submit.prevent="submitForm">
-      <div>
+
+        <label for="prenom">Prénom:</label> 
+        <input type="text" id="prenom" name="prenom" v-model="prenom" required>
+      
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" v-model="email" required>
-      </div>
-      <div>
+      
         <label for="password">Mot de passe:</label>
         <input type="password" id="password" name="password" v-model="password" required>
-      </div>
-      <div>
+      
         <label for="password-confirm">Confirmer le mot de passe:</label>
         <input type="password" id="password-confirm" name="password-confirm" v-model="passwordConfirm" required>
-      </div>
-      <div>
+      
         <input type="submit" value="S'inscrire">
-      </div>
+      
     </form>
 
     <br>
@@ -32,7 +32,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60vh;
+  height: 80vh;
 }
 
 form {
@@ -94,9 +94,12 @@ hr{
 </style>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
+      prenom: '',
       email: '',
       password: '',
       passwordConfirm: ''
@@ -124,7 +127,18 @@ export default {
         alert('Les mots de passe ne correspondent pas')
         return
       }
-      // Envoyer les données d'inscription au serveur ici
+      axios.post('http://localhost:3000/api/clients', {
+        prenom: this.prenom,
+        email: this.email,
+        password: this.password
+      })
+      .then(response => {
+        this.$router.push('/connexion');
+      })
+      .catch(error => {
+        this.error = 'Identifiants de connexion invalides.';
+      });
+
       alert('Inscription réussie!')
     }
   }

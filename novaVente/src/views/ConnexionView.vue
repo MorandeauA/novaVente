@@ -3,17 +3,15 @@
   <hr>
   <div class="login-form">
     <form @submit.prevent="submitForm">
-      <div>
+      
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" v-model="email" required>
-      </div>
-      <div>
+      
         <label for="password">Mot de passe:</label>
         <input type="password" id="password" name="password" v-model="password" required>
-      </div>
-      <div>
+      
         <input type="submit" value="Se connecter">
-      </div>
+      
     </form>
 
     <br>
@@ -71,18 +69,20 @@ input[type=submit] {
 }
 .titre{
   margin-top: 2%;
-text-align: center;
+  text-align: center;
 }
 
 hr{
   border: none; 
   border-top: 2px solid #333;
-   margin-left: 45%;
-    margin-right: 45%;
+  margin-left: 45%;
+  margin-right: 45%;
 }
 </style>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -90,23 +90,26 @@ export default {
       password: ''
     }
   },
-  computed: {
-    isValidEmail() {
-      return this.email.includes('@')
-    }
-  },
   methods: {
     submitForm() {
-      if (!this.isValidEmail) {
-        alert("L'email doit contenir un '@'")
-        return
+      console.log(this.email)
+      console.log(this.password)
+      const credential = {
+        params: {
+          email: this.email,
+          password: this.password
+        }
       }
-      // Envoyer les données du formulaire au backend pour la validation et l'authentification
-      // Si l'authentification réussit, rediriger l'utilisateur vers la page d'accueil
-      // Sinon, afficher un message d'erreur
-
-      // Exemple de redirection vers la page d'accueil
-      this.$router.push('/')
+      console.log(credential)
+      axios.get('http://localhost:3000/api/clients/connexion', credential)
+      .then(response => {
+        console.log(response.data)
+        localStorage.setItem('token', response.data.token);
+        this.$router.push('/');
+      })
+      .catch(error => {
+        this.error = 'Identifiants de connexion invalides.';
+      });
     }
   }
 }
