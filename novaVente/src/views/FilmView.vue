@@ -4,11 +4,28 @@
   </div>
   <hr>
   <br >
+  <form @submit.prevent="addAvis">
+      <label for="nom">Nom:</label>
+      <input type="number" id="nom" v-model="newAvis.note" required>
+
+      <label for="nom">Nom f:</label>
+      <input type="number" id="nom" v-model="newAvis.film_id" required>
+
+      <label for="nom">Nom c:</label>
+      <input type="number" id="nom" v-model="newAvis.client_id" required>
+      
+      <label for="description">Description:</label>
+      <textarea id="description" v-model="newAvis.commentaire" required></textarea>
+    
+            
+      <button type="submit">Ajouter un avis</button>
+    </form>
+
   <button class="button-ajout" @click="openDialog">Ajouter un film</button>
       <!-- Dialog pour ajouter un film -->
       <div v-if="showDialog" class="dialog">
         <br>
-    <div class="dialog-content">
+     <div class="dialog-content">
       <form @submit.prevent="addFilm">
       <label for="nom">Nom:</label>
       <input type="text" id="nom" v-model="newFilm.nom" required>
@@ -43,12 +60,12 @@
           <h3 class="nom" @click="toggleShowFullNom(index)">{{ showFullNom[index] ? film.nom : reduceNom(film.nom) }}</h3>
           <p>{{ film.realisateur }}</p>
           <p>Note : {{ film.rating }}/5 </p>
-          <div class="avis" v-for="critique in avis" :key="critique.id">
+          <!-- <div class="avis" v-for="critique in avis" :key="critique.id">
             <p>{{ critique.note }}/5</p>
-            </div>
+            </div> -->
           <div>
           <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
-          <button @click="showDetails(film)" style="cursor: pointer;">Ajouter commentaire</button>
+          <button @click="addAvis()" style="cursor: pointer;">Ajouter commentaire</button>
           <button @click="deleteFilm(film.id)">❌ Supprimer film</button> <!-- Bouton de suppression -->
           </div>
         </div>
@@ -58,6 +75,7 @@
   <div v-if="selectedFilm" class="modal">
   <div class="modal-content">
     <u><h2 class="dialog-titre">{{ selectedFilm.nom }}</h2></u>
+  <br />
     <div class="dialog-flex-container">
       <div class="dialog-left">
         <img class="dialog-image" :src="selectedFilm.photo" alt="Photo du film">
@@ -66,14 +84,26 @@
         <p>{{ selectedFilm.description }}</p>
       </div>
       <div class="dialog-right">
-        <div class="avis" v-for="critique in avis" :key="critique.id">
+        <h3>Commentaires :</h3>
+        <div class="avis-container">
+
+         <div  v-for="critique in avis" :key="critique.id">
+          <div class="avis" v-if="critique.id_film === selectedFilm.id">
           <div class="commentaire">
-            <div class="date">{{ critique.date_creation }}</div>
+          <div  v-for="client in clients" :key="client.id" >
+            <div class="avis" v-if="critique.id_client === client.id">
+            <div class="nom">{{ client.prenom }}</div>
+            </div>
+          </div>
+            
+            <div class="date">{{ formatDate(critique.date_creation) }}</div>
             <div class="contenu">
               <br>
               <p>{{ critique.commentaire }}</p>
               <p class="note">{{ critique.note }}/5</p>
             </div>
+          </div>
+          </div>
           </div>
         </div>
       </div>
@@ -81,6 +111,23 @@
     <button  @click="selectedFilm = null">❌ Fermer</button>
   </div>
 </div>
+<div v-if="showDialog" class="modal">
+  <div class="modal-content">
+    <u><h2 class="dialog-titre">{{ selectedAvis.nom }}</h2></u>
+    <form @submit="submitAvis">
+      <label>Note:</label>
+      <input type="number" v-model="note" required>
+      
+      <label>Commentaire:</label>
+      <textarea v-model="commentaire" required></textarea>
+      
+      <button type="submit">Soumettre</button>
+    </form>
+
+    <button @click="selectedAvis = null">❌ Fermer</button>
+  </div>
+</div>
+
 
 
 </template>
@@ -96,6 +143,7 @@ export default {
     return {
       films: [],
       selectedFilm: null,
+      selectedAvis: null,
       showFullNom: [],
       showDialog: false,
       newFilm: {
@@ -106,14 +154,31 @@ export default {
         duree: '',
         photo: ''
       },
+      newAvis: {
+        note: '',
+        commentaire: '',
+        film_id: '',
+        client_id: ''
+      },
     }
   },
   mounted() {
     this.getFilms();
     this.getAvis();
-    console.log(this.avis);
+    this.getClient();
   },
   methods: {
+    formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return date.toLocaleDateString('fr-FR', options);
+  },
     reduceNom(nom) {
     if (nom.length > 20) {
       return nom.slice(0, 20) + '...';
@@ -122,11 +187,13 @@ export default {
     }
   },
   showDetails(film) {
-    this.selectedFilm = film;
+    this.selectedFilm = film;    
   },
+
   closeDialog() {
     this.selectedFilm = null;
     this.showDialog = false;
+    this.selectedAvis = null;
   },
   async getFilms() {
     try {
@@ -146,6 +213,29 @@ export default {
       console.log(error);
     }
   },
+  async getClient() {
+    try {
+      const response = await axios.get('http://localhost:3000/api/clients');
+      this.clients = response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async addAvis() {
+      try {
+        const response = await axios.post('http://localhost:3000/api/avis', {
+          id_film: this.newAvis.film_id, // Remplacez FILM_ID par l'ID réel du film
+          id_client: this.newAvis.client_id, // Remplacez FILM_ID par l'ID réel du film
+          note: this.newAvis.note,
+          commentaire: this.newAvis.commentaire
+        });
+        
+        this.avis.push(response.data);
+        this.closeDialog();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   toggleShowFullNom(index) {
       // inverser la valeur pour le film à l'index donné
       this.showFullNom[index] = !this.showFullNom[index];
@@ -174,6 +264,14 @@ export default {
         console.log(error);
       }
     },
+        async getAvisByFilm() {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/films/${filmId}/avis`); // Remplacez FILM_ID par l'ID réel du film
+        this.avis = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     openDialog() {
       this.showDialog = true;
     },
@@ -191,6 +289,11 @@ function isValidURL(str) {
 </script>
 
 <style scoped>
+
+.avis-container {
+    height: 400px; /* Hauteur maximale du conteneur */
+    overflow-y: scroll; /* Ajoute une barre de défilement uniquement si nécessaire */
+  }
 .btnajout{
   margin-left: 47%;
   cursor: pointer;
@@ -248,9 +351,9 @@ function isValidURL(str) {
 
 .modal-content {
   background-color: antiquewhite;
-  padding: 20px;
-  max-width: 80%;
-  max-height: 80%;
+  padding: 40px;
+  max-width: 100%;
+  max-height: 100%;
   overflow: auto;
 }
 

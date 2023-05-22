@@ -69,14 +69,14 @@ input[type=submit] {
 }
 .titre{
   margin-top: 2%;
-  text-align: center;
+text-align: center;
 }
 
 hr{
   border: none; 
   border-top: 2px solid #333;
-  margin-left: 45%;
-  margin-right: 45%;
+   margin-left: 45%;
+    margin-right: 45%;
 }
 </style>
 
@@ -88,6 +88,11 @@ export default {
     return {
       email: '',
       password: ''
+    }
+  },
+  computed: {
+    isValidEmail() {
+      return this.email.includes('@')
     }
   },
   methods: {
