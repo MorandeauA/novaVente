@@ -66,7 +66,11 @@
           <div>
           <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
           <button @click="addAvis()" style="cursor: pointer;">Ajouter commentaire</button>
+          <!-- <div  v-for="client in clients" :key="client.id" >
+          <div v-if=" client.nom === 'admin'"> -->
           <button @click="deleteFilm(film.id)">❌ Supprimer film</button> <!-- Bouton de suppression -->
+        <!-- </div>
+          </div> -->
           </div>
         </div>
       </div>
@@ -111,24 +115,6 @@
     <button  @click="selectedFilm = null">❌ Fermer</button>
   </div>
 </div>
-<div v-if="showDialog" class="modal">
-  <div class="modal-content">
-    <u><h2 class="dialog-titre">{{ selectedAvis.nom }}</h2></u>
-    <form @submit="submitAvis">
-      <label>Note:</label>
-      <input type="number" v-model="note" required>
-      
-      <label>Commentaire:</label>
-      <textarea v-model="commentaire" required></textarea>
-      
-      <button type="submit">Soumettre</button>
-    </form>
-
-    <button @click="selectedAvis = null">❌ Fermer</button>
-  </div>
-</div>
-
-
 
 </template>
 
@@ -225,7 +211,7 @@ export default {
       try {
         const response = await axios.post('http://localhost:3000/api/avis', {
           id_film: this.newAvis.film_id, // Remplacez FILM_ID par l'ID réel du film
-          id_client: this.newAvis.client_id, // Remplacez FILM_ID par l'ID réel du film
+          id_client: this.newAvis.client_id, 
           note: this.newAvis.note,
           commentaire: this.newAvis.commentaire
         });
