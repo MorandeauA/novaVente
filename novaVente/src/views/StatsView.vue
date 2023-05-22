@@ -1,53 +1,76 @@
 <template>
-  <div class="stats-page">
-    <h1 class="titre">Mes statistiques</h1>
-    <hr>
-    <br />
-    <br />
-    <h2>Films aimés : </h2>
-    <p> {{ filmsAimes }}</p>
-    
-    <h3>Commentaires laissés : </h3> 
-    <p> {{ commentaires }}</p>
+  <div class="dashboard">
+    <h1>Dashboard</h1>
+    <div v-if="isUserLoggedIn" class="dashboard-content">
+      <!-- Affichage des données du dashboard -->
+      <p>Bienvenue, {{ user.prenom }}!</p>
+      <p>Vous êtes connecté en tant que {{ user.email }}.</p>
+      <!-- Autres éléments spécifiques du dashboard -->
+    </div>
+    <div v-else class="dashboard-content">
+      <p>Vous devez être connecté pour accéder au dashboard.</p>
+      <router-link to="/connexion">Se connecter</router-link>
+    </div>
   </div>
 </template>
 
+
 <script>
 export default {
-  name: 'StatsPage',
   data() {
     return {
-      filmsAimes: 0,
-      commentaires: 0
-    }
+      isUserLoggedIn: false,
+      user: null
+    };
   },
   created() {
-    // Appeler votre API ou votre backend pour récupérer les données
-    // de statistiques des films aimés et des commentaires laissés.
-    // Puis mettre à jour les données du composant avec les résultats.
-    this.filmsAimes = 10;
-    this.commentaires = 5;
+    this.checkUserLogin();
+  },
+  methods: {
+    checkUserLogin() {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      // Vérification de la connexion de l'utilisateur (par exemple, vérifier la présence d'un token valide)
+      const token = localStorage.getItem('token');
+      if (token && userData) {
+        // Utilisateur connecté
+        this.isUserLoggedIn = true;
+        this.user = userData;
+      } else {
+        // Utilisateur non connecté
+        this.isUserLoggedIn = false;
+        this.user = null;
+      }
+    },
   }
-}
+};
 </script>
 
 <style scoped>
-.stats-page{
-  align-items: center;
-  text-align: center;
-  
+.dashboard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
-.titre{
-  margin-top: 2%;
-text-align: center;
+
+.dashboard h1 {
+  font-size: 24px;
+  font-weight: bold;
 }
-hr{
-  border: none; 
-  border-top: 2px solid #333;
-   margin-left: 42%;
-    margin-right: 42%;
+
+.dashboard-content {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
 }
-h2{
-  text-align: center;
+
+.dashboard-content p {
+  margin-bottom: 10px;
+}
+
+.dashboard-content router-link {
+  color: blue;
+  text-decoration: underline;
 }
 </style>
+
