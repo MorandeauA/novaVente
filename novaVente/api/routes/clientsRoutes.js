@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const clientsController = require('../controllers/clients');
+const authMiddleware = require('../middleware/auth');
 
 // GET a specific client by email
 router.post('/connexion', clientsController.findByEmail);

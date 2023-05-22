@@ -10,6 +10,7 @@
         <li><router-link to="/film">Films</router-link></li>
         <li v-if="isConnected"><router-link to="/stats">Profil</router-link></li>
         <li><router-link to="/connexion">Connexion</router-link></li>
+        <li v-if="isConnected"><button @click="logout">Déconnexion</button></li>
       </ul>
     </nav>
   </div>
@@ -20,7 +21,16 @@ export default {
   name: 'Header',
   data() {
     return {
-      isConnected: true // Remplacez par votre condition de connexion
+      isConnected: true
+    }
+  },
+  methods: {
+    logout() {
+      // Supprimer le token et les informations utilisateur du local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('userData');
+      // Redirigez vers la page de connexion
+      this.$router.push('/connexion');
     }
   }
 }
@@ -64,5 +74,13 @@ nav ul li a {
 
 nav ul li a:hover {
   color: #f2f2f2;
+}
+
+button {
+  background-color: #16161a;
+  border-style: none;
+  color: white;
+  font-size: 24px;
+
 }
 </style>
