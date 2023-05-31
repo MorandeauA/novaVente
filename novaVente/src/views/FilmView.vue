@@ -5,13 +5,13 @@
   <hr>
   <br >
   <form @submit.prevent="addAvis">
-      <label for="nom">Nom:</label>
+      <label for="nom">Note:</label>
       <input type="number" id="nom" v-model="newAvis.note" required>
 
-      <label for="nom">Nom f:</label>
+      <label for="nom">Film id:</label>
       <input type="number" id="nom" v-model="newAvis.film_id" required>
 
-      <label for="nom">Nom c:</label>
+      <label for="nom">User id:</label>
       <input type="number" id="nom" v-model="newAvis.client_id" required>
       
       <label for="description">Description:</label>
