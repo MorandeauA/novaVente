@@ -59,7 +59,7 @@
         <div class="film-info">
           <h3 class="nom" @click="toggleShowFullNom(index)">{{ showFullNom[index] ? film.nom : reduceNom(film.nom) }}</h3>
           <p>{{ film.realisateur }}</p>
-          <p>Note : {{ film.rating }}/5 </p>
+          <p>Note : {{ moyenneNotesDetails }}/5 </p>
           <!-- <div class="avis" v-for="critique in avis" :key="critique.id">
             <p>{{ critique.note }}/5</p>
             </div> -->
@@ -84,13 +84,13 @@
       <div class="dialog-left">
         <img class="dialog-image" :src="selectedFilm.photo" alt="Photo du film">
         <p>{{ selectedFilm.content }}</p>
-        <p>Note : {{ selectedFilm.rating }}/5 </p>
+        <p>Note : {{ moyenneNotesDetails }} /5</p> <!-- Affichage de la moyenne -->
+
         <p>{{ selectedFilm.description }}</p>
       </div>
       <div class="dialog-right">
         <h3>Commentaires :</h3>
         <div class="avis-container">
-
          <div  v-for="critique in avis" :key="critique.id">
           <div class="avis" v-if="critique.id_film === selectedFilm.id">
           <div class="commentaire">
@@ -99,7 +99,6 @@
             <div class="nom">{{ client.prenom }}</div>
             </div>
           </div>
-            
             <div class="date">{{ formatDate(critique.date_creation) }}</div>
             <div class="contenu">
               <br>
@@ -146,6 +145,22 @@ export default {
         film_id: '',
         client_id: ''
       },
+    }
+  },
+  computed: {
+    moyenneNotesDetails() {
+      if (!this.selectedFilm) return 0;
+
+      const notes = this.avis
+        .filter(critique => critique.id_film === this.selectedFilm.id)
+        .map(critique => critique.note);
+
+      if (notes.length === 0) return 0;
+
+      const sommeNotes = notes.reduce((acc, note) => acc + note);
+      const moyenne = sommeNotes / notes.length;
+
+      return moyenne.toFixed(1); // Renvoie la moyenne arrondie à 2 décimales
     }
   },
   mounted() {
