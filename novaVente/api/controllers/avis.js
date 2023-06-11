@@ -17,7 +17,6 @@ const avisController = {
       const avis = await Avis.findOne({
         where: { id: req.params.id }
       });
-      console.log(avis);
       if (!avis) {
         return res.status(404).send('Avis non trouvé 1');
       }
