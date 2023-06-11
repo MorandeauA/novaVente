@@ -59,18 +59,9 @@
         <div class="film-info">
           <h3 class="nom" @click="toggleShowFullNom(index)">{{ showFullNom[index] ? film.nom : reduceNom(film.nom) }}</h3>
           <p>{{ film.realisateur }}</p>
-          <p>Note : {{ moyenneNotesDetails }}/5 </p>
-          <!-- <div class="avis" v-for="critique in avis" :key="critique.id">
-            <p>{{ critique.note }}/5</p>
-            </div> -->
           <div>
-          <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
-          <button @click="addAvis()" style="cursor: pointer;">Ajouter commentaire</button>
-          <!-- <div  v-for="client in clients" :key="client.id" >
-          <div v-if=" client.nom === 'admin'"> -->
-          <button @click="deleteFilm(film.id)">❌ Supprimer film</button> <!-- Bouton de suppression -->
-        <!-- </div>
-          </div> -->
+            <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
+            <button @click="deleteFilm(film.id)">❌ Supprimer film</button> <!-- Bouton de suppression -->
           </div>
         </div>
       </div>
