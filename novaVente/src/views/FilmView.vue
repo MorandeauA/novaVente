@@ -4,7 +4,7 @@
   </div>
   <hr>
   <br >
-  <form @submit.prevent="addAvis">
+  <form @submit.prevent="addAvis" style="padding-left: 20%;">
       <label for="nom">Note:</label>
       <input type="number" id="nom" v-model="newAvis.note" required>
 
