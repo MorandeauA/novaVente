@@ -65,7 +65,7 @@
             </div> -->
           <div>
           <button @click="showDetails(film)" style="cursor: pointer;">Voir détails</button>
-          <button @click="addAvis()" style="cursor: pointer;">Ajouter commentaire</button>
+          <button  @click="visible = true" style="cursor: pointer;">Ajouter commentaire</button>
           <!-- <div  v-for="client in clients" :key="client.id" >
           <div v-if=" client.nom === 'admin'"> -->
           <button @click="deleteFilm(film.id)">❌ Supprimer film</button> <!-- Bouton de suppression -->
@@ -121,6 +121,7 @@
 
 <script>
 import axios from 'axios';
+import Dialog from 'primevue/dialog';
 
 export default {
   name: 'Film',
