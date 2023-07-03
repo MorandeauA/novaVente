@@ -1,14 +1,4 @@
-INSERT INTO clients (prenom, email, password, date_creation) VALUES
-  ('Pierre', 'pierre.dupont@mail.com', 'Azerty1234', NOW()),
-  ('Sophie', 'sophie.martin@mail.com', 'MdpSecure5678', NOW()),
-  ('Julie', 'julie.garcia@mail.com', 'MotdepasseComplex9', NOW()),
-  ('Antoine', 'antoine.leroy@mail.com', 'MDPfort10', NOW()),
-  ('Marie', 'marie.chevalier@mail.com', 'MonMdp12345', NOW()),
-  ('Lucas', 'lucas.roux@mail.com', 'MotDePasseSecret6', NOW()),
-  ('Chloe', 'chloe.nguyen@mail.com', 'MdpUltraSecurisé11', NOW()),
-  ('Alexandre', 'alexandre.leblanc@mail.com', 'MdpSuperFort12', NOW()),
-  ('Camille', 'camille.durand@mail.com', 'mdp123456', NOW()),
-  ('Maxime', 'maxime.meyer@mail.com', 'Secret123!', NOW());
+
 
 INSERT INTO `films` (`id`, `nom`, `date_sortie`, `description`, `realisateur`, `duree`, `photo`) VALUES
 (2, 'La La Land', '2016-12-07', 'Comédie musicale romantique', 'Damien Chazelle', 128, 'https://fr.web.img4.acsta.net/pictures/16/11/10/13/52/169386.jpg'),
@@ -21,6 +11,3 @@ INSERT INTO `films` (`id`, `nom`, `date_sortie`, `description`, `realisateur`, `
 (9, 'Le Roi Lion', '1994-06-15', 'Film d\'animation', 'Roger Allers, Rob Minkoff', 89, 'https://fr.web.img6.acsta.net/c_310_420/pictures/22/09/20/12/10/2512840.jpg'),
 (10, 'Inception', '2010-07-16', 'Film de science-fiction', 'Christopher Nolan', 148, 'https://www.ecranlarge.com/media/cache/160x213/uploads/image/001/164/inception-affiche-francaise-1164840.png'),
 (11, 'Le Voyage de Chihiro', '2001-07-20', 'Film d\'animation', 'Hayao Miyazaki', 125, 'https://www.glenat.com/sites/default/files/images/livres/couv/9782344029602-001-T.jpeg');
-
-
-INSERT INTO `avis` (`id`, `id_client`, `id_film`, `note`, `commentaire`, `date_creation`) VALUES ('1', '6', '5', '4', 'Excellent film !', current_timestamp());
